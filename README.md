@@ -1,3 +1,5 @@
+[![Download on itch.io](https://img.shields.io/badge/itch.io-download-orange)](https://wyzeazz.itch.io/grind-toolkit)
+
 # The Grind Toolkit https://wyzeazz.itch.io/
 
 **12 Years in the Making – A PowerShell Toolkit for People Who Actually Use Their Computers**
