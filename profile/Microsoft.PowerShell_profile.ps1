@@ -29,7 +29,6 @@ function prompt {
 # ==================================================
 # ALIASES (Simple commands)
 # ==================================================
-Set-Alias update 'winget upgrade --all'
 Set-Alias please 'Start-Process -Verb RunAs (Get-History)[-1].CommandLine'
 Set-Alias cd.. 'Set-Location ..'
 Set-Alias open 'Start-Process'
@@ -37,7 +36,7 @@ Set-Alias open 'Start-Process'
 function reload {
     . $PROFILE
 }
-
+function update { winget upgrade --all }
 # ==================================================
 # NETWORK TOOLS
 # ==================================================
@@ -290,9 +289,9 @@ Write-Host "  DIAGNOSTICS: ipconfig-all, flushdns, ping-t, traceroute, netstat-a
 Write-Host "  WIFI: wifi-profiles, wifi-password" -ForegroundColor Green
 Write-Host "  ROUTING: route-print, arp-table" -ForegroundColor Green
 Write-Host "  NETWORK CONTROL: set-ip, set-dhcp, net-off, net-on, net-restart" -ForegroundColor Green
-Write-Host "  SYSTEM: update, temp, USED, DRIVES, gpu, uptime, folder-size" -ForegroundColor Green
+Write-Host "  SYSTEM: update, temp, USED, DRIVES, gpu, uptime, folder-size, please (SUDO+last CMD)" -ForegroundColor Green
 Write-Host "  PROCESSES: topcpu, topmem, killit, restart-explorer" -ForegroundColor Green
-Write-Host "  GAMING: bigpicture, please" -ForegroundColor Green
+Write-Host "  STEAM: bigpicture" -ForegroundColor Green
 Write-Host "  HISTORY: history, findhistory <keyword>" -ForegroundColor Green
 Write-Host "  IPERF: iperfs (server), iperfct (client TCP), iperfcu (client UDP)" -ForegroundColor Green
 Write-Host "  UTILITIES: reload, open, cls" -ForegroundColor Green
