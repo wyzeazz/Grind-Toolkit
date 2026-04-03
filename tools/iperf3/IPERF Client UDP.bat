@@ -1,13 +1,15 @@
 @ECHO OFF
 setlocal enabledelayedexpansion
-color 0D
+color 0E
+
 if not "%1" == "max" start /MAX cmd /c %0 max & exit/b
 
-ECHO     ________  __________  ______   ________________     _______________________
-ECHO    /  _/ __ \/ ____/ __ \/ ____/  /_  __/ ____/ __ \   /_  __/ ____/ ___/_  __/
-ECHO    / // /_/ / __/ / /_/ / /_       / / / /   / /_/ /    / / / __/  \__ \ / /   
-ECHO  _/ // ____/ /___/ _, _/ __/      / / / /___/ ____/    / / / /___ ___/ // /    
-ECHO /___/_/   /_____/_/ /_/_/        /_/  \____/_/        /_/ /_____//____//_/     
+CLS
+ECHO     ________  __________  ______   __  ______  ____     _______________________
+ECHO    /  _/ __ \/ ____/ __ \/ ____/  / / / / __ \/ __ \   /_  __/ ____/ ___/_  __/
+ECHO    / // /_/ / __/ / /_/ / /_     / / / / / / / /_/ /    / / / __/  \__ \ / /   
+ECHO  _/ // ____/ /___/ _, _/ __/    / /_/ / /_/ / ____/    / / / /___ ___/ // /    
+ECHO /___/_/   /_____/_/ /_/_/       \____/_____/_/        /_/ /_____//____//_/     
 ECHO.
 ECHO    ============== UDP MODE ==============
 ECHO.
@@ -19,17 +21,20 @@ if "!INPUT!"=="" (
     exit /b
 )
 
-set /p UDP_BANDWIDTH=Enter UDP bandwidth (e.g., 100M) [default: 1M]: 
-if "!UDP_BANDWIDTH!"=="" set UDP_BANDWIDTH=1M
+set /p UDP_BANDWIDTH=Enter UDP bandwidth (e.g., 100M, 1000M) [default: 1000M]: 
+if "!UDP_BANDWIDTH!"=="" set UDP_BANDWIDTH=1000M
 
-set /p REVERSE=Run reverse test? [Y/N]: 
+set /p REVERSE=Run reverse test (server sends to client)? [Y/N]: 
 if /I "!REVERSE!" EQU "Y" set REVERSE_FLAG=-R
 
 :rerun
-C:/Grind-Toolkit/tools/iperf3/iperf3 -c !INPUT! -u -b !UDP_BANDWIDTH! !REVERSE_FLAG! -t 5 -O 1 -V
+echo.
+echo Testing with: -u -b !UDP_BANDWIDTH! !REVERSE_FLAG!
+echo.
+C:\Grind-Toolkit\tools\iperf3\iperf3.exe -c !INPUT! -u -b !UDP_BANDWIDTH! !REVERSE_FLAG! -t 5 -O 1 -V
 
 :choice
-set /P c=Create a Logfile? [Y/N]?
+set /P c=Would you like to create a logfile? [Y/N]?
 if /I "!c!" EQU "Y" goto :ChoiceA
 if /I "!c!" EQU "N" goto :ChoiceB
 goto :choice
@@ -38,12 +43,14 @@ goto :choice
 set /p INPUT2=ENTER THE SITE NAME:
 set TIMESTAMP=%date:~-4,4%%date:~-7,2%%date:~-10,2%_%time:~0,2%%time:~3,2%%time:~6,2%
 set TIMESTAMP=!TIMESTAMP: =0!
-C:/Grind-Toolkit/tools/iperf3/iperf3 -c !INPUT! -u -b !UDP_BANDWIDTH! !REVERSE_FLAG! -t 60 -O 1 -V --logfile "%USERPROFILE%\Desktop\!INPUT2!_UDP_!TIMESTAMP!.log"
+echo Creating "!INPUT2!_UDP_!TIMESTAMP!.log" on Desktop. Please wait 60 seconds...
+C:\Grind-Toolkit\tools\iperf3\iperf3.exe -c !INPUT! -u -b !UDP_BANDWIDTH! !REVERSE_FLAG! -t 60 -O 1 -V --logfile "%USERPROFILE%\Desktop\!INPUT2!_UDP_!TIMESTAMP!.log"
+echo Log saved to Desktop
 goto :choice1
 
 :ChoiceB
 :choice1
-set /P d=Rerun this test? [Y/N]?
+set /P d=Would you like to RERUN this test? [Y/N]?
 if /I "!d!" EQU "Y" goto :ChoiceC
 if /I "!d!" EQU "N" goto :ChoiceD
 goto :choice1
@@ -52,5 +59,5 @@ goto :choice1
 goto :rerun
 
 :ChoiceD
-ECHO "Exit"
+echo Exiting UDP test...
 exit
