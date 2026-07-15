@@ -60,7 +60,7 @@ function netstat-an {
     netstat -an
 }
 function Invoke-IpSwap {
-    & "C:\Iperf3\SNIPER IP SWAP.exe" -a
+    & "C:\Grind-Toolkit\tools\iperf3\SNIPER IP SWAP.exe" -a
 }
 Set-Alias -Name ipswap -Value Invoke-IpSwap
 function myip {
