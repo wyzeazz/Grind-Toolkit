@@ -1,5 +1,6 @@
 # ==================================================
-# THE GRIND TOOLKIT – 12 Years of PowerShell
+# WYZEAZZ UNIFIED PROFILE
+# Gaming + Network + System Tools
 # ==================================================
 
 # --- Colors & Look ---
@@ -29,14 +30,16 @@ function prompt {
 # ==================================================
 # ALIASES (Simple commands)
 # ==================================================
+Set-Alias update 'winget upgrade --all'
 Set-Alias please 'Start-Process -Verb RunAs (Get-History)[-1].CommandLine'
 Set-Alias cd.. 'Set-Location ..'
 Set-Alias open 'Start-Process'
 
 function reload {
+    Clear-Host
     . $PROFILE
-}
-function update { winget upgrade --all }
+} '. $PROFILE'
+
 # ==================================================
 # NETWORK TOOLS
 # ==================================================
@@ -56,6 +59,10 @@ function traceroute {
 function netstat-an {
     netstat -an
 }
+function Invoke-IpSwap {
+    & "C:\Iperf3\SNIPER IP SWAP.exe" -a
+}
+Set-Alias -Name ipswap -Value Invoke-IpSwap
 function myip {
     (Invoke-WebRequest -Uri "https://ifconfig.me/ip" -UseBasicParsing).Content.Trim()
 }
@@ -187,41 +194,27 @@ function folder-size {
 function bigpicture {
     start steam://open/bigpicture
 }
+function please {
+    $lastCmd = (Get-History)[-1].CommandLine
+    Start-Process cmd -Verb RunAs -ArgumentList "/k", "powershell -NoProfile -Command `"$lastCmd`""
+}
 function restart-explorer {
     Stop-Process -Name explorer -Force
     Start-Process explorer
 }
 
 # ==================================================
-# IPERF TOOLS (with 12-year-old batch files)
+# IPERF ALIASES
 # ==================================================
-$iperfPath = "C:\Grind-Toolkit\tools\iperf3\iperf3.exe"
-
 function iperfs {
-    if (-NOT (Test-Path $iperfPath)) {
-        Write-Host "iperf3 not found at $iperfPath" -ForegroundColor Red
-        Write-Host "Make sure the Grind Toolkit is installed correctly." -ForegroundColor Yellow
-        return
-    }
-    & "C:\Grind-Toolkit\tools\iperf3\IPERF Server.bat"
+    & "C:\iperf3\IPERF Server.bat"
 }
-
 function iperfct {
-    if (-NOT (Test-Path $iperfPath)) {
-        Write-Host "iperf3 not found at $iperfPath" -ForegroundColor Red
-        return
-    }
-    & "C:\Grind-Toolkit\tools\iperf3\IPERF Client TCP.bat"
+    & "C:\iperf3\IPERF Client TCP.bat"
 }
-
 function iperfcu {
-    if (-NOT (Test-Path $iperfPath)) {
-        Write-Host "iperf3 not found at $iperfPath" -ForegroundColor Red
-        return
-    }
-    & "C:\Grind-Toolkit\tools\iperf3\IPERF Client UDP.bat"
+    & "C:\iperf3\IPERF Client UDP.bat"
 }
-
 # ==================================================
 # PRO-TIP ENGINE (20% evil)
 # ==================================================
@@ -283,18 +276,19 @@ Write-Host "`n$tip`n" -ForegroundColor $(if ($isEvil) { 'Red' } else { 'Green' }
 # ==================================================
 
 Write-Host ""
-Write-Host ">>> THE GRIND TOOLKIT <<<" -ForegroundColor Cyan
+Write-Host ">>> =================< SNIPER TOOLBOX >================ <<<" -ForegroundColor Red
 Write-Host ""
 Write-Host "  DIAGNOSTICS: ipconfig-all, flushdns, ping-t, traceroute, netstat-an, myip" -ForegroundColor Green
 Write-Host "  WIFI: wifi-profiles, wifi-password" -ForegroundColor Green
 Write-Host "  ROUTING: route-print, arp-table" -ForegroundColor Green
-Write-Host "  NETWORK CONTROL: set-ip, set-dhcp, net-off, net-on, net-restart" -ForegroundColor Green
-Write-Host "  SYSTEM: update, temp, USED, DRIVES, gpu, uptime, folder-size, please (SUDO+last CMD)" -ForegroundColor Green
+Write-Host "  NETWORK CONTROL: set-ip, set-dhcp, ipswap, net-off, net-on, net-restart" -ForegroundColor Green
+Write-Host "  SYSTEM: update, temp, USED, DRIVES, please, gpu, uptime, folder-size" -ForegroundColor Green
 Write-Host "  PROCESSES: topcpu, topmem, killit, restart-explorer" -ForegroundColor Green
-Write-Host "  STEAM: bigpicture" -ForegroundColor Green
 Write-Host "  HISTORY: history, findhistory <keyword>" -ForegroundColor Green
 Write-Host "  IPERF: iperfs (server), iperfct (client TCP), iperfcu (client UDP)" -ForegroundColor Green
 Write-Host "  UTILITIES: reload, open, cls" -ForegroundColor Green
+Write-Host ""
+Write-Host ">>> =================================================== <<<" -ForegroundColor Red
 Write-Host ""
 Write-Host "  Type any command to run it." -ForegroundColor DarkGray
 Write-Host ""
